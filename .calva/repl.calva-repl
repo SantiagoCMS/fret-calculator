@@ -100,3 +100,105 @@ clj꞉user꞉> 
 ; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\project.clj:1:1).
 ; Unable to resolve symbol: defproject in this context
 clj꞉user꞉> 
+(defn distance-to-bridge
+  "Calcula a distância do traste N até a ponte (bridge).
+   Parâmetros:
+     scale-lenght - comprimento de escala em mm
+     fret-number  - número do traste" 
+  [scale-lenght fret-number]
+  (/ scale-lenght (Math/pow 2 (/ fret-number 12.0))))
+clj꞉fret-calculator.calculator꞉> 
+(distance-to-bridge 650 2)
+clj꞉fret-calculator.calculator꞉> 
+(doc distance-to-bridge)
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\calculator.clj:15:1).
+; Unable to resolve symbol: doc in this context
+clj꞉fret-calculator.calculator꞉> 
+(doc distance-to-bridge)
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\calculator.clj:16:1).
+; Unable to resolve symbol: doc in this context
+clj꞉fret-calculator.calculator꞉> 
+(distance-to-bridge 648 1)
+  (distance-to-nut 648 1)
+  (calculate-fret 648 5)
+  (calculate-all-frets 648 3)
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\calculator.clj:40:3).
+; Unable to resolve symbol: distance-to-nut in this context
+; 
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\calculator.clj:41:3).
+; Unable to resolve symbol: calculate-fret in this context
+; 
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\calculator.clj:42:3).
+; Unable to resolve symbol: calculate-all-frets in this context
+clj꞉fret-calculator.calculator꞉> 
+(distance-to-bridge 648 1)
+  (distance-to-nut 648 1)
+  (calculate-fret 648 5)
+  (calculate-all-frets 648 3)
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\calculator.clj:40:3).
+; Unable to resolve symbol: distance-to-nut in this context
+; 
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\calculator.clj:41:3).
+; Unable to resolve symbol: calculate-fret in this context
+; 
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\calculator.clj:42:3).
+; Unable to resolve symbol: calculate-all-frets in this context
+clj꞉fret-calculator.calculator꞉> 
+(comment
+  (distance-to-bridge 648 1)
+  (distance-to-nut 648 1)
+  (calculate-fret 648 5)
+  (calculate-all-frets 648 3)
+; Syntax error reading source at (REPL:43:1).
+; EOF while reading, starting at line 38
+clj꞉fret-calculator.calculator꞉> 
+(ns fret-calculator.calculator)
+
+(defn distance-to-bridge
+  "Calcula a distância do traste N até a ponte (bridge).
+   Parâmetros:
+     scale-length - comprimento de escala em mm
+     fret-number  - número do traste" 
+  [scale-length fret-number]
+  (/ scale-length (Math/pow 2 (/ fret-number 12.0))))
+
+(defn distance-to-nut
+  "Calcula a distância do traste N até a pestana (nut).
+   Parâmetros:
+     scale-length - comprimento de escala em mm
+     fret-number  - número do traste"
+  [scale-length fret-number]
+  (- scale-length (distance-to-bridge scale-length fret-number)))
+
+(defn calculate-fret
+  "Retorna um mapa com as distâncias de um traste específico.
+   Exemplo de retorno:
+     {:fret 1 :distance-to-nut 36.35 :distance-to-bridge 611.65}"
+  [scale-length fret-number]
+  (let [to-bridge (distance-to-bridge scale-length fret-number)
+        to-nut (distance-to-nut scale-length fret-number)]
+    {:fret           fret-number
+     :distance-to-nut  (Double/parseDouble (format "%.2f" to-nut))
+     :distance-to-bridge (Double/parseDouble (format "%.2f" to-bridge))}))
+
+(defn calculate-all-frets
+  "Calcula a ditância de todos os trastes de 1 até num-frets.
+   Parâmetros:
+     scale-length - comprimento da escala em mm
+     num-frets - quantidade de trastes (ex: 22 ou 24)"
+  [scale-length num-frets]
+  (mapv (partial calculate-fret scale-length) (range 1 (inc num-frets))))
+clj꞉fret-calculator.calculator꞉> 
+(distance-to-bridge 648 1)
+  (distance-to-nut 648 1)
+  (calculate-fret 648 5)
+  (calculate-all-frets 648 3)
+clj꞉fret-calculator.calculator꞉> 
+(distance-to-bridge 650 12)
+clj꞉fret-calculator.calculator꞉> 
+(distance-to-nut 650 12)
+clj꞉fret-calculator.calculator꞉> 
+(calculate-fret 648 12)
+clj꞉fret-calculator.calculator꞉> 
+(calculate-all-frets 650 22)
+clj꞉fret-calculator.calculator꞉> 
