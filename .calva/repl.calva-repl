@@ -1,0 +1,60 @@
+(when-let [requires (resolve 'clojure.main/repl-requires)] (clojure.core/apply clojure.core/require @requires))
+clj꞉fret-calculator.core꞉> 
+(println "Hello, World!")
+clj꞉fret-calculator.core꞉> 
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (println "Hello, World!"))
+clj꞉fret-calculator.core꞉> 
+(ns fret-calculator.core
+  (:gen-class))
+
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (println "Hello, World!"))
+clj꞉fret-calculator.core꞉> 
+(ns fret-calculator.core
+  (:gen-class))
+
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (println "Hello, World!"))
+clj꞉fret-calculator.core꞉> 
+(ns fret-calculator.core
+  (:gen-class))
+
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (println "Hello, World!"))
+clj꞉fret-calculator.core꞉> 
+(ns fret-calculator.core-test
+  (:require [clojure.test :refer :all]
+            [fret-calculator.core :refer :all]))
+
+(deftest a-test
+  (testing "FIXME, I fail."
+    (is (= 0 1))))
+clj꞉fret-calculator.core-test꞉> 
+(defproject fret-calculator "0.1.0-SNAPSHOT"
+  :description "FIXME: write description"
+  :url "https://example.com/FIXME"
+  :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
+            :url "https://www.eclipse.org/legal/epl-2.0/"}
+  :dependencies [[org.clojure/clojure "1.12.2"]]
+  :main ^:skip-aot fret-calculator.core
+  :target-path "target/%s"
+  :profiles {:uberjar {:aot :all
+                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\project.clj:1:1).
+; Unable to resolve symbol: defproject in this context
+clj꞉user꞉> 
+(+ 1 2)
+clj꞉fret-calculator.core꞉> 
+(println "Hello, World!")
+clj꞉fret-calculator.core꞉> 
+(is (= 0 1))
+clj꞉fret-calculator.core-test꞉> 
