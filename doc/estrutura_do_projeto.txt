@@ -1,0 +1,14 @@
+Estrutura do Projeto
+
+fret-calculator/
+├── project.clj              ← configuração do Leiningen
+├── src/
+│   └── fret_calculator/
+│       ├── core.clj         ← entry point (servidor HTTP)
+│       ├── handler.clj      ← rotas da API
+│       ├── calculator.clj   ← lógica dos cálculos
+│       └── scales.clj       ← escalas e afinações pré-definidas
+├── test/
+│   └── fret_calculator/
+│       └── calculator_test.clj
+└── README.md
