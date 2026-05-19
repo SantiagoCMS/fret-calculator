@@ -58,3 +58,45 @@ clj꞉fret-calculator.core꞉> 
 clj꞉fret-calculator.core꞉> 
 (is (= 0 1))
 clj꞉fret-calculator.core-test꞉> 
+(defproject fret-calculator "0.1.0-SNAPSHOT"
+  :description "API para cálculo de distâncias de trastes de violão "
+  :url "https://github.com/SantiagoCMS/fret-calculator.git"
+  :license {:name "MIT"
+            :url "https://opensource.org/licenses/MIT"}
+  
+  :dependencies [[org.clojure/clojure "1.12.2"]
+                 [compojure "1.7.1"]
+                 [ring/ring-core "1.11.0"]
+                 [ring/ring-jetty-adapter "1.11.0"]
+                 [ring/ring-json "0.5.1"]
+                 [cheshire "5.12.0"]]
+  
+  :main ^:skip-aot fret-calculator.core
+  
+  :target-path "target/%s"
+  :profiles {:uberjar {:aot :all
+                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\project.clj:1:1).
+; Unable to resolve symbol: defproject in this context
+clj꞉user꞉> 
+(defproject fret-calculator "0.1.0-SNAPSHOT"
+  :description "API para cálculo de distâncias de trastes de violão "
+  :url "https://github.com/SantiagoCMS/fret-calculator.git"
+  :license {:name "MIT"
+            :url "https://opensource.org/licenses/MIT"}
+  
+  :dependencies [[org.clojure/clojure "1.12.2"]
+                 [compojure "1.7.1"]
+                 [ring/ring-core "1.11.0"]
+                 [ring/ring-jetty-adapter "1.11.0"]
+                 [ring/ring-json "0.5.1"]
+                 [cheshire "5.12.0"]]
+  
+  :main ^:skip-aot fret-calculator.core
+  
+  :target-path "target/%s"
+  :profiles {:uberjar {:aot :all
+                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\project.clj:1:1).
+; Unable to resolve symbol: defproject in this context
+clj꞉user꞉> 
