@@ -202,3 +202,78 @@ clj꞉fret-calculator.calculator꞉> 
 clj꞉fret-calculator.calculator꞉> 
 (calculate-all-frets 650 22)
 clj꞉fret-calculator.calculator꞉> 
+(when-let [requires (resolve 'clojure.main/repl-requires)] (clojure.core/apply clojure.core/require @requires))
+clj꞉fret-calculator.core꞉> 
+(comment
+  (get-scale :fender)
+  (get-scale :gibson)
+  (get-tuning :drop-d)
+  (get-tuning :dadgad)
+  (list-scale)
+  (list-tunings))
+clj꞉fret-calculator.scales꞉> 
+(get-scale :fender)
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\scales.clj:42:3).
+; Unable to resolve symbol: get-scale in this context
+clj꞉fret-calculator.scales꞉> 
+(get-scale fender)
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\scales.clj:42:3).
+; Unable to resolve symbol: get-scale in this context
+clj꞉fret-calculator.scales꞉> 
+(get-scale :gibson)
+; Syntax error compiling at (c:\Users\sneak\Documents\IMT 2026\fret-calculator\src\fret_calculator\scales.clj:43:3).
+; Unable to resolve symbol: get-scale in this context
+clj꞉fret-calculator.scales꞉> 
+(def scale-lengths
+  {:gibson     {:name "Gibson"          :length 628.0}
+   :fender     {:name "Fender / Strat"  :length 648.0}
+   :prs        {:name "PRS"             :length 635.0}
+   :baritone   {:name "Baritone"        :length 686.0}})
+
+(def tunings
+  {:standard         {:name "Standard"             :notes ["E2" "A2" "D3" "G3" "B3" "E4"]}
+   :drop-d           {:name "Drop D"               :notes ["D2" "A2" "D3" "G3" "B3" "E4"]}
+   :half-step-down   {:name "Half Step Down (Eb)"  :notes ["Eb2" "Ab2" "Db3" "Gb3" "Bb3" "Eb4"]}
+   :open-g           {:name "Open G"               :notes ["D2" "G2" "D3" "G3" "B3" "D4"]}
+   :drop-c           {:name "Drop C"               :notes ["C2" "G2" "C3" "F3" "A3" "D4"]}
+   :dadgad           {:name "DADGAD"               :notes ["D2" "A2" "D3" "G3" "A3" "D4"]}})
+
+(defn get-scale
+  "Busca uma escala pelo keyword (ex: :fender).
+   Retorna nil se não encontrada."
+  [scale-key]
+  (get scale-lengths scale-key))
+
+(defn get-tuning
+  "Busca uma afinação pelo keyword (ex: :drop-d).
+   Retorna nil se não encontrada"
+  [tuning-key]
+  (get tunings tuning-key))
+
+(defn list-scale 
+  "Retorna todas as escalas como vetor de mapas,
+   adicionando o :id de cada uma."
+  []
+  (mapv (fn [[k v]] (assoc v :id (name k))) scale-lengths))
+
+(defn list-tunings
+  "Retorna todas as afinações como vetor de mapas,
+   adicionando o :id de cada uma." 
+  []
+  (mapv (fn [[k v]] (assoc v :id (name k))) tunings))
+clj꞉fret-calculator.scales꞉> 
+(get-scale :fender)
+clj꞉fret-calculator.scales꞉> 
+(get-scale :gibson)
+  (get-tuning :drop-d)
+clj꞉fret-calculator.scales꞉> 
+(get-scale :gibson)
+clj꞉fret-calculator.scales꞉> 
+(get-tuning :drop-d)
+clj꞉fret-calculator.scales꞉> 
+(get-tuning :dadgad)
+clj꞉fret-calculator.scales꞉> 
+(list-scale)
+clj꞉fret-calculator.scales꞉> 
+(list-tunings)
+clj꞉fret-calculator.scales꞉> 

@@ -1,5 +1,5 @@
 (ns fret-calculator.calculator-test
-  (:require [clojure.test :refer [deftest is testing run-tests]]
+  (:require [clojure.test :refer [deftest is testing]]
             [fret-calculator.calculator :refer :all]))
 
 (deftest test-distance-to-bridge
