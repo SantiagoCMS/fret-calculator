@@ -26,7 +26,7 @@
   [tuning-key]
   (get tunings tuning-key))
 
-(defn list-scale 
+(defn list-scales 
   "Retorna todas as escalas como vetor de mapas,
    adicionando o :id de cada uma."
   []
@@ -43,5 +43,5 @@
   (get-scale :gibson)
   (get-tuning :drop-d)
   (get-tuning :dadgad)
-  (list-scale)
+  (list-scales)
   (list-tunings))
