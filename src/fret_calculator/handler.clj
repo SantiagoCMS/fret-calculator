@@ -46,7 +46,6 @@
      tuning       - afinação pré-definida (ex: standard, drop-d)
      num_frets    - quantidade de trastes (padrão: 22)"
   [req]
-  (println "PARAMS:" (:query-params req))
   (let [params        (:query-params req)
         scale-length  (resolve-scale-length params)
         tuning        (resolve-tuning (get params "tuning"))
