@@ -2,6 +2,7 @@
   (:require [compojure.core :refer [defroutes GET]]
             [compojure.route :as route]
             [ring.middleware.json :refer [wrap-json-response]]
+            [ring.middleware.params :refer [wrap-params]]
             [ring.util.response :refer [response bad-request]]
             [fret-calculator.calculator :as calc]
             [fret-calculator.scales :as scales]))
@@ -14,7 +15,7 @@
      1. ?scale=fender -> busca no scales.clj
      2. ?scale_length=660 -> usa valor inserido pelo usuário
      3. nenhum dos dois -> retorna nil"
-  [{:keys [scale scale_length]}]
+  [{:strs [scale scale_length]}]
   (cond
     scale (when-let [s (scales/get-scale (keyword scale))]
             (:length s))
@@ -45,6 +46,7 @@
      tuning       - afinação pré-definida (ex: standard, drop-d)
      num_frets    - quantidade de trastes (padrão: 22)"
   [req]
+  (println "PARAMS:" (:query-params req))
   (let [params        (:query-params req)
         scale-length  (resolve-scale-length params)
         tuning        (resolve-tuning (get params "tuning"))
@@ -90,4 +92,5 @@
 
 (def app
   (-> app-routes
+      wrap-params
       (wrap-json-response {:pretty true})))
