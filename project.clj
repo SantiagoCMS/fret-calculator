@@ -9,6 +9,7 @@
                  [ring/ring-core "1.11.0"]
                  [ring/ring-jetty-adapter "1.11.0"]
                  [ring/ring-json "0.5.1"]
+                 [ring-cors "0.1.13"]
                  [cheshire "5.12.0"]]
 
   :main ^:skip-aot fret-calculator.core

@@ -1,4 +1,5 @@
-(ns fret-calculator.scales)
+(ns fret-calculator.scales
+  (:require [clojure.string :as str]))
 
 (def scale-lengths
   {:gibson     {:name "Gibson"          :length 628.0}
@@ -28,15 +29,21 @@
 
 (defn list-scales 
   "Retorna todas as escalas como vetor de mapas,
-   adicionando o :id de cada uma."
+   adicionando o :id de cada uma e renomeando :name para :label."
   []
-  (mapv (fn [[k v]] (assoc v :id (name k))) scale-lengths))
+  (mapv (fn [[k v]] 
+          (assoc v :id (name k) :label (:name v))) 
+        scale-lengths))
 
 (defn list-tunings
   "Retorna todas as afinações como vetor de mapas,
-   adicionando o :id de cada uma." 
+   adicionando o :id de cada uma e convertendo :notes para string."
   []
-  (mapv (fn [[k v]] (assoc v :id (name k))) tunings))
+  (mapv (fn [[k v]] 
+          (assoc v :id (name k) 
+                  :label (:name v)
+                  :notes (clojure.string/join " " (:notes v))))
+        tunings))
 
 (comment
   (get-scale :fender)

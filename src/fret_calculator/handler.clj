@@ -3,6 +3,7 @@
             [compojure.route :as route]
             [ring.middleware.json :refer [wrap-json-response]]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.cors :refer [wrap-cors]]
             [ring.util.response :refer [response bad-request]]
             [fret-calculator.calculator :as calc]
             [fret-calculator.scales :as scales]))
@@ -92,4 +93,7 @@
 (def app
   (-> app-routes
       wrap-params
-      (wrap-json-response {:pretty true})))
+      (wrap-json-response {:pretty true})
+      (wrap-cors :access-control-allow-origin [#".*"]
+                 :access-control-allow-methods [:get :post :options]
+                 :access-control-allow-headers ["Content-Type"])))
