@@ -1,107 +1,112 @@
-# 🎸 Fret Calculator API
+# 🎸 Fret Calculator
 
-Uma API REST desenvolvida em **Clojure** que calcula a distância de cada traste de uma guitarra até a pestana (nut) e até a ponte (bridge), com base no comprimento de escala do instrumento.
+Uma aplicação full-stack para calcular a posição de cada traste de uma guitarra com base no comprimento de escala do instrumento. O projeto separa responsabilidades entre um backend em Clojure, responsável pelos cálculos, e um frontend em React + TypeScript, responsável pela interface e pela experiência do usuário.
 
-Projeto acadêmico desenvolvido no **Instituto Mauá de Tecnologia**, também utilizado como projeto de portfólio profissional.
-
----
-
-## 🛠️ Tecnologias
-
-| Tecnologia | Uso |
-|---|---|
-| [Clojure 1.11](https://clojure.org/) | Linguagem principal |
-| [Leiningen](https://leiningen.org/) | Gerenciador de dependências e build |
-| [Ring](https://github.com/ring-clojure/ring) | Servidor HTTP |
-| [Compojure](https://github.com/weavejester/compojure) | Roteamento |
-| [Cheshire](https://github.com/dakrone/cheshire) | Serialização JSON |
+O projeto foi desenvolvido como atividade acadêmica no Instituto Mauá de Tecnologia e também pode servir como exemplo de portfólio técnico.
 
 ---
 
-## 📐 A Fórmula
+## 🧩 Visão geral
 
-A API utiliza a fórmula padrão de lutheria para calcular a posição dos trastes:
+- Backend: Clojure + Leiningen + Ring + Compojure
+- Frontend: React + TypeScript + Vite + Tailwind + shadcn/ui
+- API: REST, com endpoints para cálculo de trastes, listas de escalas e afinações
+- Porta do backend: 3000
+- Porta do frontend: 5173
 
-```
-Distância até a ponte  =  escala ÷ 2^(n/12)
-Distância até a pestana =  escala − distância até a ponte
+---
+
+## 📐 Fórmula utilizada
+
+A API usa a fórmula padrão de lutheria para calcular a distância dos trastes:
+
+```text
+Distância até a ponte = escala ÷ 2^(n/12)
+Distância até a pestana = escala − distância até a ponte
 ```
 
-Onde `n` é o número do traste e `escala` é o comprimento de escala em milímetros.
+Onde `n` é o número do traste e `escala` é o comprimento da escala em milímetros.
 
 ---
 
-## 🚀 Como Rodar
+## 🛠️ Requisitos
 
-### Pré-requisitos
+### Backend
 - Java 11+
-- Leiningen instalado → [leiningen.org](https://leiningen.org/)
+- Leiningen
 
-### Instalação
+### Frontend
+- Node.js 18+
+- npm
+
+---
+
+## ▶️ Como executar
+
+### 1. Backend (Clojure)
 
 ```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/fret-calculator.git
 cd fret-calculator
-
-# Instale as dependências
 lein deps
-```
-
-### Rodando em desenvolvimento
-
-```bash
 lein run
 ```
 
-O servidor sobe em `http://localhost:3000`.
+O servidor ficará disponível em `http://localhost:3000`.
 
-### Rodando os testes
+### 2. Frontend (React)
 
 ```bash
+cd fret-calculator/frontend
+npm install
+npm run dev
+```
+
+A aplicação ficará disponível em `http://localhost:5173`.
+
+### 3. Testes
+
+```bash
+cd fret-calculator
 lein test
 ```
 
-### Build (uberjar)
+### 4. Build do backend
 
 ```bash
+cd fret-calculator
 lein uberjar
 java -jar target/uberjar/fret-calculator-0.1.0-SNAPSHOT-standalone.jar
 ```
 
----
-
-## 📡 Endpoints
-
-### `GET /frets`
-
-Calcula as distâncias de todos os trastes.
-
-**Query params:**
-
-| Parâmetro | Tipo | Obrigatório | Descrição |
-|---|---|---|---|
-| `scale` | string | Sim* | Nome de uma escala pré-definida (ex: `fender`) |
-| `scale_length` | number | Sim* | Comprimento de escala customizado em mm (ex: `660`) |
-| `tuning` | string | Não | Afinação pré-definida (ex: `standard`) |
-| `num_frets` | integer | Não | Quantidade de trastes. Padrão: `22` |
-
-*Informe `scale` **ou** `scale_length` — não é necessário os dois.
-
-**Exemplos:**
+### 5. Build do frontend
 
 ```bash
-# Com escala pré-definida
-GET /frets?scale=fender&tuning=standard&num_frets=22
-
-# Com escala customizada
-GET /frets?scale_length=660&num_frets=24
-
-# Com afinação
-GET /frets?scale=gibson&tuning=drop-d
+cd fret-calculator/frontend
+npm run build
 ```
 
-**Resposta (`200 OK`):**
+---
+
+## 📡 Endpoints da API
+
+### GET /frets
+
+Calcula os trastes para uma escala pré-definida ou para um comprimento de escala customizado.
+
+Parâmetros query:
+- `scale`: nome da escala pré-definida, como `fender` ou `gibson`
+- `scale_length`: comprimento da escala em mm, como `648`
+- `tuning`: afinação pré-definida, como `standard` ou `drop-d`
+- `num_frets`: quantidade de trastes desejada (padrão: `22`)
+
+Exemplos:
+
+```bash
+curl "http://localhost:3000/frets?scale=fender&tuning=standard&num_frets=22"
+curl "http://localhost:3000/frets?scale_length=660&num_frets=24"
+```
+
+Resposta exemplo:
 
 ```json
 {
@@ -119,73 +124,57 @@ GET /frets?scale=gibson&tuning=drop-d
 }
 ```
 
-**Resposta de erro (`400 Bad Request`):**
+Erro comum:
 
 ```json
 { "error": "Informe 'scale' (ex: fender) ou 'scale_length' em mm (ex: 660)" }
 ```
 
----
+### GET /scales
 
-### `GET /scales`
+Retorna as escalas pré-definidas disponíveis.
 
-Retorna todas as escalas pré-definidas.
+### GET /tunings
 
-**Resposta (`200 OK`):**
-
-```json
-{
-  "scales": [
-    { "id": "gibson",   "name": "Gibson",        "length": 628.0 },
-    { "id": "fender",   "name": "Fender / Strat", "length": 648.0 },
-    { "id": "prs",      "name": "PRS",            "length": 635.0 },
-    { "id": "baritone", "name": "Baritone",       "length": 686.0 }
-  ]
-}
-```
+Retorna as afinações pré-definidas disponíveis.
 
 ---
 
-### `GET /tunings`
+## 📁 Estrutura do projeto
 
-Retorna todas as afinações pré-definidas.
-
-**Resposta (`200 OK`):**
-
-```json
-{
-  "tunings": [
-    { "id": "standard",       "name": "Standard",           "notes": ["E2","A2","D3","G3","B3","E4"] },
-    { "id": "drop-d",         "name": "Drop D",             "notes": ["D2","A2","D3","G3","B3","E4"] },
-    { "id": "half-step-down", "name": "Half Step Down (Eb)","notes": ["Eb2","Ab2","Db3","Gb3","Bb3","Eb4"] },
-    { "id": "open-g",         "name": "Open G",             "notes": ["D2","G2","D3","G3","B3","D4"] },
-    { "id": "drop-c",         "name": "Drop C",             "notes": ["C2","G2","C3","F3","A3","D4"] },
-    { "id": "dadgad",         "name": "DADGAD",             "notes": ["D2","A2","D3","G3","A3","D4"] }
-  ]
-}
-```
-
----
-
-## 📁 Estrutura do Projeto
-
-```
+```text
 fret-calculator/
-├── project.clj                        ← dependências e configuração
 ├── src/
 │   └── fret_calculator/
-│       ├── core.clj                   ← entry point / servidor
-│       ├── handler.clj                ← rotas e validações
-│       ├── calculator.clj             ← lógica dos cálculos
-│       └── scales.clj                 ← escalas e afinações pré-definidas
+│       ├── calculator.clj
+│       ├── core.clj
+│       ├── handler.clj
+│       └── scales.clj
 ├── test/
 │   └── fret_calculator/
-│       └── calculator_test.clj        ← testes unitários
-└── README.md
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   ├── services/
+│   │   └── styles/
+│   ├── package.json
+│   └── vite.config.ts
+├── README.md
+├── BACKEND_API.md
+├── INTEGRATION.md
+└── project.clj
 ```
+
+---
+
+## 🔗 Documentação complementar
+
+- [BACKEND_API.md](BACKEND_API.md)
+- [INTEGRATION.md](INTEGRATION.md)
+- [frontend/README.md](frontend/README.md)
 
 ---
 
 ## 📄 Licença
 
-MIT License — sinta-se livre para usar, estudar e modificar.
+MIT License — sinta-se livre para usar, estudar, modificar e adaptar o projeto.
